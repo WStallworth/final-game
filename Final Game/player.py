@@ -16,7 +16,7 @@ class Player(pygame.sprite.Sprite):
 
 
     def draw(self,surface):
-        surface.blit(self.image,(self.rect.center))
+        surface.blit(self.image,self.rect)
 
     def move_up(self):
         self.y_speed = -1 * PLAYER_SPEED
@@ -39,3 +39,13 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.x += self.x_speed
         self.y += self.y_speed
+        if self.x > SCREEN_WIDTH - 2*BASETILE_SIZE:
+            self.x = SCREEN_WIDTH - 2*BASETILE_SIZE
+        if self.x < BASETILE_SIZE:
+            self.x = BASETILE_SIZE
+        if self.y < BASETILE_SIZE:
+            self.y = BASETILE_SIZE
+        if self.y > SCREEN_HEIGHT - (BASETILE_SIZE * 2):
+            self.y = SCREEN_HEIGHT - (BASETILE_SIZE * 2)
+        self.rect.x = self.x
+        self.rect.y = self.y
