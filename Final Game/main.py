@@ -7,6 +7,7 @@ from game_constants import *
 from player import Player
 import misc
 import object
+import store
 #Initialize Pygame
 pygame.init()
 
@@ -51,12 +52,15 @@ while running:
         hero.stop()
         hero.x = SCREEN_WIDTH/2
         hero.y = SCREEN_HEIGHT/2
+        #level_selection.main()
 
     result = pygame.sprite.spritecollide(hero, object.gray_house, False)
     if result != []:
         hero.stop()
         hero.x = SCREEN_WIDTH/2
         hero.y = SCREEN_HEIGHT/2
+        store.main()
+
     #TODO: Make do you want to enter screen
 
     # draw background and update
@@ -68,7 +72,7 @@ while running:
     hero.draw(screen)
 
     #TODO: Figure out a way so plants arent on buildings without ruining performance
-    
+
     #Flipping the display so you can actually see
     pygame.display.flip()
     #Clock
