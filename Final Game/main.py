@@ -8,6 +8,7 @@ from player import Player
 import misc
 import object
 import store
+import level_selection
 #Initialize Pygame
 pygame.init()
 
@@ -25,7 +26,7 @@ misc.draw_spawn(background)
 misc.make_plants()
 #Creating an instance of the player
 #TODO: Actually fix the player class, this is just a skeleton to test with
-hero = Player(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,"Earth","assets/backgrounds/Tiles/tile_0003.png")
+hero = Player(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,"Earth","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0088.png")
 
 
 #Main Loop:
@@ -52,14 +53,14 @@ while running:
         hero.stop()
         hero.x = SCREEN_WIDTH/2
         hero.y = SCREEN_HEIGHT/2
-        #level_selection.main()
+        level_selection.main(screen)
 
     result = pygame.sprite.spritecollide(hero, object.gray_house, False)
     if result != []:
         hero.stop()
         hero.x = SCREEN_WIDTH/2
         hero.y = SCREEN_HEIGHT/2
-        store.main()
+        store.main(screen)
 
     #TODO: Make do you want to enter screen
 

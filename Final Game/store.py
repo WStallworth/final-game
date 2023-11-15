@@ -3,13 +3,12 @@ import sys
 from game_constants import *
 # Set up colors
 #THIS IS ALL FROM CHAT GPT
-def main():
+def main(screen):
 
     # Initialize Pygame
-    pygame.init()
 
     # Set up display
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    #screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Store Entrance Confirmation")
     background_image = pygame.image.load("assets/backgrounds/store.png")
     # Set up colors
@@ -44,8 +43,9 @@ def main():
 
                     # Check if the mouse clicked on the "No" button
                     elif no_button_rect.collidepoint(mouse_pos):
-                        return None
-                        # Add your logic for not entering the store
+                        #TODO: Why does this slow down my code and how to fix it
+                        return
+
 
         # Draw background
         screen.blit(background_image,(0,0))
