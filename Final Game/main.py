@@ -9,6 +9,7 @@ import misc
 import object
 import store
 import level_selection
+from npc import NPC, NPCS
 #Initialize Pygame
 pygame.init()
 
@@ -27,8 +28,10 @@ misc.make_plants()
 #Creating an instance of the player
 #TODO: Actually fix the player class, this is just a skeleton to test with
 hero = Player(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,"Earth","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0088.png")
-
-
+npc_images = ["assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0084.png","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0085.png","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0086.png","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0099.png","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0100.png"]
+for _ in range(5):
+    image = random.randint(0,4)
+    NPCS.add(NPC(random.randint(BASETILE_SIZE, SCREEN_WIDTH - BASETILE_SIZE*2),random.randint(BASETILE_SIZE, SCREEN_HEIGHT - BASETILE_SIZE*2),npc_images[image]))
 #Main Loop:
 while running:
     #quit condition
@@ -70,14 +73,15 @@ while running:
     misc.draw_gray_house(background,600,450)
     object.decor.draw(screen)
     hero.update()
+    NPCS.update()
     hero.draw(screen)
-
+    NPCS.draw(screen)
     #TODO: Figure out a way so plants arent on buildings without ruining performance
 
     #Flipping the display so you can actually see
     pygame.display.flip()
     #Clock
-    clock.tick(60)
+    clock.tick(30)
 # quit pygame
 pygame.quit()
 sys.exit()
