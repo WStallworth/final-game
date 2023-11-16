@@ -65,6 +65,4 @@ def main(screen):
         # Update display
         pygame.display.flip()
 
-        # Control the frame rate
-        pygame.time.Clock().tick(30)
 

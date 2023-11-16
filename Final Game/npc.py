@@ -31,9 +31,13 @@ class NPC(pygame.sprite.Sprite):
             self.x_speed = -1 * NPC_SPEED
         elif direction == "right":
             self.x_speed = NPC_SPEED
-        clock.tick()
-        self.x += self.x_speed
-        self.y += self.y_speed
+        #I've found that this code makes them less jittery
+        tick = 0
+        while tick < 3:
+            self.x += self.x_speed
+            self.y += self.y_speed
+            tick += 1
+        #This code keeps it in bounds
         if self.x > SCREEN_WIDTH - 2 * BASETILE_SIZE:
             self.x = SCREEN_WIDTH - 2 * BASETILE_SIZE
         if self.x < BASETILE_SIZE:
@@ -44,6 +48,7 @@ class NPC(pygame.sprite.Sprite):
             self.y = SCREEN_HEIGHT - (BASETILE_SIZE * 2)
         self.rect.x = self.x
         self.rect.y = self.y
+        clock.tick(60)
 
 
 

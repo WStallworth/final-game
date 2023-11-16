@@ -1,14 +1,12 @@
 import pygame
 import sys
 from game_constants import *
-
+import level_one
 def main(screen):
 
     # Set up display
     #screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Level Select")
-    # Set up fonts
-    font = pygame.font.Font("assets/fonts/Old London.ttf", 36)
     #Setting up button
     button_width, button_height = SCREEN_WIDTH//5, SCREEN_HEIGHT//5
     level_1_button_rect = pygame.Rect(0,0,button_width,SCREEN_HEIGHT)
@@ -37,17 +35,17 @@ def main(screen):
                     # Checking which button the mouse hit
                     if level_1_button_rect.collidepoint(mouse_pos):
                         # Another function for the store
-                        print("Level 1")
+                        return "L1"
 
                     # Check if the mouse clicked on the "No" button
                     elif level_2_button_rect.collidepoint(mouse_pos):
-                        print("Level 2")
+                        return "L2"
 
                     elif level_3_button_rect.collidepoint(mouse_pos):
-                        print("Level 3")
+                        return "L3"
 
                     elif level_4_button_rect.collidepoint(mouse_pos):
-                        print("Level 4")
+                        return "L4"
 
                     elif back_button_rect.collidepoint(mouse_pos):
                         return None
@@ -60,6 +58,3 @@ def main(screen):
         screen.blit(home,(SCREEN_WIDTH *(4/5), SCREEN_HEIGHT/2-80))
         # Update display
         pygame.display.flip()
-
-        # Control the frame rate
-        pygame.time.Clock().tick(30)
