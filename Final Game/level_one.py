@@ -2,11 +2,19 @@ import pygame
 import sys
 from game_constants import *
 import background
+from swordsman import Swordsman,swordsmen
 def level_one(hero):
     #Init a screen
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Level One")
 
+    #Creating a enemy sprite
+    sword1 = Swordsman(20,20,"assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0084.png",hero)
+
+    #Creating Lives
+    lives = NUM_LIVES
+    hearts = pygame.image.load("assets/backgrounds/misc_sprites/heart.png").convert()
+    hearts.set_colorkey((255,255,255))
     # Clock object
     clock = pygame.time.Clock()
     score = 0
@@ -33,8 +41,15 @@ def level_one(hero):
 
         #Updating things that move:
         hero.update()
+        sword1.update()
         #Drawing things that move
         hero.draw(screen)
+        sword1.draw(screen)
+
+        # Track lives in lower left corner:
+        for i in range(1,lives+1):
+            screen.blit(hearts, (BASETILE_SIZE * i, SCREEN_HEIGHT - BASETILE_SIZE))
+
         # Flipping the display so you can actually see
         pygame.display.flip()
         # Clock

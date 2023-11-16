@@ -20,6 +20,21 @@ pygame.display.set_caption("A Sick Title for the game")
 #Clock object
 clock = pygame.time.Clock()
 
+#These are initial values for ores:
+bronze = 0
+iron = 0
+gold = 0
+emerald = 0
+
+#Pictures for ores to pull from later:
+bronze_pic = pygame.image.load("assets/backgrounds/misc_sprites/bronze.jpg").convert()
+iron_pic = pygame.image.load("assets/backgrounds/misc_sprites/iron.jpg").convert()
+gold_pic = pygame.image.load("assets/backgrounds/misc_sprites/gold.jpg").convert()
+emerald_pic = pygame.image.load("assets/backgrounds/misc_sprites/emerald.jpg").convert()
+bronze_pic.set_colorkey((255,255,255))
+iron_pic.set_colorkey((255,255,255))
+gold_pic.set_colorkey((255,255,255))
+emerald_pic.set_colorkey((255,255,255))
 #Main loop
 running = True
 background = screen.copy()
@@ -60,7 +75,13 @@ while running:
         hero.y = SCREEN_HEIGHT/2
         level = level_selection.main(screen)
         if level == "L1":
-            gold = level_one.level_one(hero)
+            bronze = level_one.level_one(hero)
+        elif level == "L2":
+            print("Level 2 Placeholder")
+        elif level == "L3":
+            print("Level 3 placeholder")
+        elif level == "L4":
+            print("Level 4 Placeholder")
     #Second house collision
     result = pygame.sprite.spritecollide(hero, object.gray_house, False)
     if result != []:
@@ -83,13 +104,21 @@ while running:
     #Finally drawing things that are moving
     hero.draw(screen)
     NPCS.draw(screen)
+
+    #Drawing win icons in corner to track progress:
+    if bronze >= L1_WIN:
+        screen.blit(bronze_pic,(BASETILE_SIZE,SCREEN_HEIGHT-BASETILE_SIZE))
+    if iron >= L2_WIN:
+        screen.blit(iron_pic,(BASETILE_SIZE*2,SCREEN_HEIGHT-BASETILE_SIZE))
+    if gold >= L3_WIN:
+        screen.blit(gold_pic,(BASETILE_SIZE*3,SCREEN_HEIGHT-BASETILE_SIZE))
+    if emerald >= L4_WIN:
+        screen.blit(emerald_pic,(BASETILE_SIZE*4,SCREEN_HEIGHT-BASETILE_SIZE))
     #TODO: Figure out a way so plants arent on buildings without ruining performance
 
     #Flipping the display so you can actually see
     pygame.display.flip()
     #Clock
-    #TODO: ThIS IS A TEST
-
     clock.tick(30)
 # quit pygame
 pygame.quit()
