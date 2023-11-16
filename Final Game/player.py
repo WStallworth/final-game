@@ -36,6 +36,14 @@ class Player(pygame.sprite.Sprite):
         self.x_speed = 0
         self.y_speed = 0
 
+
+    def stop_x(self):
+        self.x_speed = 0
+
+    def stop_y(self):
+        self.y_speed = 0
+
+
     def update(self):
         self.x += self.x_speed
         self.y += self.y_speed

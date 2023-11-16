@@ -56,16 +56,25 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         #This will be my movement code:
-        hero.stop()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_UP or event.key == pygame.K_w:
                 hero.move_up()
-            if event.key == pygame.K_DOWN:
-                hero.move_down()
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                 hero.move_left()
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                hero.move_down()
+            if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                 hero.move_right()
+
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_UP or event.key == pygame.K_w:
+                hero.stop_y()
+            if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                hero.stop_x()
+            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                hero.stop_y()
+            if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                hero.stop_x()
 
     #Checking for house collisions:
     result = pygame.sprite.spritecollide(hero, object.red_house, False)
@@ -115,7 +124,8 @@ while running:
     if emerald >= L4_WIN:
         screen.blit(emerald_pic,(BASETILE_SIZE*4,SCREEN_HEIGHT-BASETILE_SIZE))
     #TODO: Figure out a way so plants arent on buildings without ruining performance
-
+    pygame.sprite.groupcollide(object.decor, object.gray_house, True,False)
+    pygame.sprite.groupcollide(object.decor, object.red_house, True, False)
     #Flipping the display so you can actually see
     pygame.display.flip()
     #Clock

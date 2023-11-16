@@ -1,6 +1,7 @@
 import pygame
 from game_constants import *
 import random
+from swordsman import Swordsman, swordsmen
 def draw_level_one(surface):
     # Covering everything in dungeon floor
     floor = ["assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0000.png",
@@ -36,6 +37,12 @@ def draw_level_one(surface):
     # Top Wall:
     for x in range(BASETILE_SIZE, SCREEN_WIDTH - BASETILE_SIZE, BASETILE_SIZE):
         surface.blit(b_wall, (x, SCREEN_HEIGHT - BASETILE_SIZE))
+
+def draw_swordsmen(surface,target):
+    for _ in range(5):
+        swordsmen.add(Swordsman(random.randint(BASETILE_SIZE, SCREEN_WIDTH - BASETILE_SIZE*2),
+                                random.randint(BASETILE_SIZE, SCREEN_HEIGHT - BASETILE_SIZE*2),
+                                "assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0109.png",target))
 
 
 
