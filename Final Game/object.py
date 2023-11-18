@@ -16,3 +16,4 @@ class HouseTiles(pygame.sprite.Sprite):
 red_house = pygame.sprite.Group()
 gray_house = pygame.sprite.Group()
 decor = pygame.sprite.Group()
+wall = pygame.sprite.Group()

@@ -4,7 +4,7 @@ from game_constants import *
 class Player(pygame.sprite.Sprite):
     """My player class"""
 
-    def __init__(self,x,y,element,element_pic_path):
+    def __init__(self,x,y,weapon,element_pic_path):
         super().__init__()
         self.image = pygame.image.load(element_pic_path)
         self.rect = self.image.get_rect()
@@ -13,6 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.center = (x,y)
         self.x_speed = 0
         self.y_speed = 0
+        self.weapon = weapon
 
 
     def draw(self,surface):

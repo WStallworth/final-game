@@ -10,7 +10,6 @@ import store
 import level_selection
 from npc import NPC, NPCS
 import level_one
-from background import draw_level_one
 #Initialize Pygame
 pygame.init()
 
@@ -43,7 +42,7 @@ misc.draw_spawn(background)
 misc.make_plants()
 #Creating an instance of the player
 #TODO: Actually fix the player class, this is just a skeleton to test with
-hero = Player(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,"Earth","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0088.png")
+hero = Player(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,1,"assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0088.png")
 #making npcs, and randomly generating their appearance
 npc_images = ["assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0084.png","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0085.png","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0086.png","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0099.png","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0100.png"]
 for _ in range(5):
@@ -56,6 +55,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         #This will be my movement code:
+        #TODO: CHANGE MOVEMENT CODE
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP or event.key == pygame.K_w:
                 hero.move_up()

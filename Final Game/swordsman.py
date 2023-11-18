@@ -19,8 +19,9 @@ class Swordsman(pygame.sprite.Sprite):
         surface.blit(self.image,self.rect)
 
     def update(self):
-        self.rect.x += (self.target.rect.x - self.rect.x) * ENEMY_SPEED
-        self.rect.y += (self.target.rect.y - self.rect.y) * ENEMY_SPEED
+        if self.rect.x != self.target.rect.x and self.rect.y != self.target.rect.y:
+            self.rect.x += (self.target.rect.x - self.rect.x)/abs(self.target.rect.x - self.rect.x) * ENEMY_SPEED
+            self.rect.y += (self.target.rect.y - self.rect.y)/abs(self.target.rect.y - self.rect.y)* ENEMY_SPEED
 
 
 swordsmen = pygame.sprite.Group()

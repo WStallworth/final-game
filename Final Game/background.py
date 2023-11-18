@@ -38,8 +38,8 @@ def draw_level_one(surface):
     for x in range(BASETILE_SIZE, SCREEN_WIDTH - BASETILE_SIZE, BASETILE_SIZE):
         surface.blit(b_wall, (x, SCREEN_HEIGHT - BASETILE_SIZE))
 
-def draw_swordsmen(surface,target):
-    for _ in range(5):
+def add_swordsmen(target,num):
+    for _ in range(num):
         swordsmen.add(Swordsman(random.randint(BASETILE_SIZE, SCREEN_WIDTH - BASETILE_SIZE*2),
                                 random.randint(BASETILE_SIZE, SCREEN_HEIGHT - BASETILE_SIZE*2),
                                 "assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0109.png",target))
