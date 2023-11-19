@@ -18,7 +18,7 @@ class Player(pygame.sprite.Sprite):
     def draw(self,surface):
         surface.blit(self.image,self.rect)
 
-
+    #CASEY CODE
     def update(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a] and self.rect.left > BASETILE_SIZE*1.25:

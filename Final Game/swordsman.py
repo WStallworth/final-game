@@ -19,10 +19,15 @@ class Swordsman(pygame.sprite.Sprite):
         surface.blit(self.image,self.rect)
 
     def update(self):
-        if self.rect.x != self.target.rect.x and self.rect.y != self.target.rect.y:
-            self.rect.x += (self.target.rect.x - self.rect.x)/abs(self.target.rect.x - self.rect.x) * ENEMY_SPEED
-            self.rect.y += (self.target.rect.y - self.rect.y)/abs(self.target.rect.y - self.rect.y)* ENEMY_SPEED
-
+        if self.rect.x != self.target.rect.x or self.rect.y != self.target.rect.y:
+            try:
+                self.rect.x += (self.target.rect.x - self.rect.x)/abs(self.target.rect.x - self.rect.x) * ENEMY_SPEED
+                self.rect.y += (self.target.rect.y - self.rect.y)/abs(self.target.rect.y - self.rect.y) * ENEMY_SPEED
+            except ZeroDivisionError:
+                try:
+                    self.rect.y += (self.target.rect.y - self.rect.y)/abs(self.target.rect.y - self.rect.y) * ENEMY_SPEED
+                except:
+                    pass
 
 swordsmen = pygame.sprite.Group()
 

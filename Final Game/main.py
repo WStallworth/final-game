@@ -9,7 +9,7 @@ import object
 import store
 import level_selection
 from npc import NPC, NPCS
-import level_one
+import level_one, level_two
 #Initialize Pygame
 pygame.init()
 
@@ -66,7 +66,7 @@ while running:
         if level == "L1":
             bronze = level_one.level_one(hero)
         elif level == "L2":
-            print("Level 2 Placeholder")
+            iron = level_two.level_two(hero)
         elif level == "L3":
             print("Level 3 placeholder")
         elif level == "L4":
@@ -79,7 +79,6 @@ while running:
         hero.rect.y = SCREEN_HEIGHT/2
         store.main(screen)
 
-    #TODO: Make do you want to enter screen
 
     # draw background and update
     screen.blit(background, (0, 0))
