@@ -28,8 +28,7 @@ def level_one(hero):
     arena = screen.copy()
     background.draw_level_one(arena)
     #Main Loops
-    #TODO: TURN OFF GOD MODE: and lives > 0
-    while score != L1_WIN:
+    while score != L1_WIN and lives > 0:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 break
@@ -43,41 +42,22 @@ def level_one(hero):
                     hero.weapon = 3
             #Checking if you clicked on an enemy("Sword") and if they're in melee range(ONLY WORKS WHEN WEAPON IS 1)
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and hero.weapon == 1:
-                # Check if the mouse click is on any sprite in the group
+                # Check if the mouse click is on any sprite in the group- CHAT GPT CODE
                 clicked_sprites = [sprite for sprite in swordsmen if sprite.rect.collidepoint(event.pos)]
                 for clicked_sprite in clicked_sprites:
-                    if abs(clicked_sprite.rect.x-hero.x) <= MELEE_RANGE and abs(clicked_sprite.rect.y-hero.y) <= MELEE_RANGE:
+                    if abs(clicked_sprite.rect.x-hero.rect.x) <= MELEE_RANGE and abs(clicked_sprite.rect.y-hero.rect.y) <= MELEE_RANGE:
                         clicked_sprite.kill()  # Remove the clicked sprite from the group
                         score += 1
                         background.add_swordsmen(hero,1)
             #This code is for weapon 3, fireball(or arrows, whichever I havea picture for)
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and hero.weapon == 2:
-                fireballs.add(Fireball("assets/backgrounds/misc_sprites/fireball.png",hero.x,hero.y,*event.pos))
+                fireballs.add(Fireball("assets/backgrounds/misc_sprites/fireball.png",hero.rect.x,hero.rect.y,*event.pos))
             #This is code for weapon 3, defensive weapon
             if event.type == pygame.MOUSEMOTION and pygame.mouse.get_pressed()[0] and hero.weapon == 3:
                 # Create a new sprite while the left mouse button is pressed and mouse is moving
                 wall.add(HouseTiles("assets/backgrounds/Tiles/tile_0126.png",*event.pos))
-            # This will be my movement code checks to see if you pushed a key down, and will move unil that key goes up:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP or event.key == pygame.K_w:
-                    hero.move_up()
-                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    hero.move_left()
-                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                    hero.move_down()
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    hero.move_right()
-            #Checks to see if the key goes up
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_UP or event.key == pygame.K_w:
-                    hero.stop_y()
-                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    hero.stop_x()
-                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                    hero.stop_y()
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    hero.stop_x()
 
+        #THis begins drawing and checking things
         screen.blit(arena, (0, 0))
 
         #Updating things that move:
@@ -156,5 +136,7 @@ def level_one(hero):
     #This code removes all enemies so when you relaunch the level theres no pre-existing people
     for person in swordsmen:
         swordsmen.remove(person)
+    hero.rect.x = SCREEN_WIDTH/2
+    hero.rect.y= SCREEN_HEIGHT/2
     return score
 

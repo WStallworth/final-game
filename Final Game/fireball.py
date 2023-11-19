@@ -13,6 +13,7 @@ class Fireball(pygame.sprite.Sprite):
         self.target_y = target_y
         self.speed = PROJECTILE_SPEED
 
+    #THIS CODE IS FROM CHAT GPT I CHANGED SOME OF THE CLASS PARAMETERS
     def update(self):
         # Calculate the angle between the projectile and the target
         angle = math.atan2(self.target_y - self.rect.centery, self.target_x - self.rect.centerx)

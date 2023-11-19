@@ -54,34 +54,14 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        #This will be my movement code:
-        #TODO: CHANGE MOVEMENT CODE
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP or event.key == pygame.K_w:
-                hero.move_up()
-            if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                hero.move_left()
-            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                hero.move_down()
-            if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                hero.move_right()
 
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_UP or event.key == pygame.K_w:
-                hero.stop_y()
-            if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                hero.stop_x()
-            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                hero.stop_y()
-            if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                hero.stop_x()
 
     #Checking for house collisions:
     result = pygame.sprite.spritecollide(hero, object.red_house, False)
-    if result != []:
-        hero.stop()
-        hero.x = SCREEN_WIDTH/2
-        hero.y = SCREEN_HEIGHT/2
+    if result:
+        #hero.stop()
+        hero.rect.x = SCREEN_WIDTH/2
+        hero.rect.y = SCREEN_HEIGHT/2
         level = level_selection.main(screen)
         if level == "L1":
             bronze = level_one.level_one(hero)
@@ -93,10 +73,10 @@ while running:
             print("Level 4 Placeholder")
     #Second house collision
     result = pygame.sprite.spritecollide(hero, object.gray_house, False)
-    if result != []:
-        hero.stop()
-        hero.x = SCREEN_WIDTH/2
-        hero.y = SCREEN_HEIGHT/2
+    if result:
+        #hero.stop()
+        hero.rect.x = SCREEN_WIDTH/2
+        hero.rect.y = SCREEN_HEIGHT/2
         store.main(screen)
 
     #TODO: Make do you want to enter screen
