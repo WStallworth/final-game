@@ -5,7 +5,7 @@ class Swordsman(pygame.sprite.Sprite):
 
     def __init__(self,x,y,image,target):
         super().__init__()
-        self.image = pygame.image.load(image)
+        self.image = pygame.image.load(image).convert()
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y

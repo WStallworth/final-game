@@ -1,50 +1,80 @@
 import pygame
 import sys
+import math
 
 # Initialize Pygame
 pygame.init()
 
-# Set up display
-width, height = 800, 600
-screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Continuous Create Sprites while Button Pressed")
+# Constants
+WIDTH, HEIGHT = 800, 600
+FPS = 60
 
-# Define colors
-white = (255, 255, 255)
+# Colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
 
-# Define a simple sprite class
-class Sprite(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+# Create the screen
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Projectile Shooter")
+
+# Clock to control the frame rate
+clock = pygame.time.Clock()
+
+# Define the Projectile class
+class Projectile(pygame.sprite.Sprite):
+    def __init__(self, start_x, start_y, target_x, target_y):
         super().__init__()
-        self.image = pygame.Surface((50, 50))
-        self.image.fill(white)
+        self.image = pygame.Surface((10, 10))
+        self.image.fill(WHITE)
         self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
+        self.rect.center = (start_x, start_y)
+        self.target_x = target_x
+        self.target_y = target_y
+        self.speed = 10
 
-# Create a sprite group
-sprites = pygame.sprite.Group()
+    def update(self):
+        # Calculate the angle between the projectile and the target
+        angle = math.atan2(self.target_y - self.rect.centery, self.target_x - self.rect.centerx)
 
+        # Calculate the velocity components
+        velocity_x = self.speed * math.cos(angle)
+        velocity_y = self.speed * math.sin(angle)
+
+        # Update the projectile's position based on velocity
+        self.rect.x += velocity_x
+        self.rect.y += velocity_y
+
+# Create sprite groups
+all_sprites = pygame.sprite.Group()
+projectiles = pygame.sprite.Group()
+
+# Game loop
 running = True
-
 while running:
+    # Handle events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        #elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            # Create a new sprite on mouse down
-            #new_sprite = Sprite(*event.pos)
-            #sprites.add(new_sprite)
-        elif event.type == pygame.MOUSEMOTION and pygame.mouse.get_pressed()[0]:
-            # Create a new sprite while the left mouse button is pressed and mouse is moving
-            new_sprite = Sprite(*event.pos)
-            sprites.add(new_sprite)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            # Shoot a projectile from the center of the screen to the mouse click
+            projectile = Projectile(WIDTH // 2, HEIGHT // 2, *pygame.mouse.get_pos())
+            all_sprites.add(projectile)
+            projectiles.add(projectile)
 
-    screen.fill((0, 0, 0))
+    # Update
+    all_sprites.update()
 
-    # Draw sprites
-    sprites.draw(screen)
+    # Draw
+    screen.fill(BLACK)
+    all_sprites.draw(screen)
 
+    # Update the display
     pygame.display.flip()
 
+    # Cap the frame rate
+    clock.tick(FPS)
+
+# Quit Pygame
 pygame.quit()
 sys.exit()
