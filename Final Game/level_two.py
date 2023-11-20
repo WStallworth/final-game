@@ -28,7 +28,7 @@ def level_two(hero):
     arena = screen.copy()
     background.draw_level_two(arena)
     #Main Loops
-    while score != L2_WIN and lives > 0:
+    while score != L2_WIN or lives > 0:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 break
