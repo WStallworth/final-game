@@ -2,6 +2,8 @@
 import pygame
 import random
 import sys
+
+import level_three
 from game_constants import *
 from player import Player
 import misc
@@ -9,7 +11,7 @@ import object
 import store
 import level_selection
 from npc import NPC, NPCS
-import level_one, level_two
+import level_one, level_two, level_three
 #Initialize Pygame
 pygame.init()
 
@@ -68,9 +70,11 @@ while running:
         elif level == "L2":
             iron = level_two.level_two(hero)
         elif level == "L3":
-            print("Level 3 placeholder")
+            gold = level_three.level_three(hero)
         elif level == "L4":
             print("Level 4 Placeholder")
+
+
     #Second house collision
     result = pygame.sprite.spritecollide(hero, object.gray_house, False)
     if result:

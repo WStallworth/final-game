@@ -28,7 +28,7 @@ def level_two(hero):
     arena = screen.copy()
     background.draw_level_two(arena)
     #Main Loops
-    while score != L2_WIN or lives > 0:
+    while score != L2_WIN and lives > 0:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 break
@@ -65,7 +65,7 @@ def level_two(hero):
         wizards.update()
         fireballs.update()
         enemy_fireballs.update()
-        #Checking to ensure there is always 5 swoardsmen on the screen:
+        #Checking to ensure there is always 5 wizards on the screen:
         if len(wizards) < 5:
             background.add_wizards(hero,(5-len(wizards)))
 
@@ -99,13 +99,13 @@ def level_two(hero):
 
         #Checking to see if the melee unit hits the player, and taking life if it does hit
         result = pygame.sprite.spritecollide(hero, wizards, True)
-        for i in result:
-            lives -= WIZARD_MELEE
+        if result:
+            lives -= len(result) * WIZARD_MELEE
 
         #Checking to see if the fireball hits the player:
         result = pygame.sprite.spritecollide(hero,enemy_fireballs,True)
-        for i in result:
-            lives -= WIZARD_FIRE
+        if result:
+            lives -= len(result) * WIZARD_FIRE
 
         #Checking to see if bad guys run into the walls, if they do kill them(for now)
         result = pygame.sprite.groupcollide(wizards, wall, True, False)
