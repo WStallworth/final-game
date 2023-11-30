@@ -5,6 +5,7 @@ from object import HouseTiles,potion
 import random
 from fireball import Fireball,fireballs,enemy_fireballs
 from wizard import wizards
+import sys
 def level_two(hero):
     hero.weapon = 1
     hero.speed = PLAYER_SPEED
@@ -47,7 +48,7 @@ def level_two(hero):
     while click != True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                break
+                sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 click = True
     #Main Loops

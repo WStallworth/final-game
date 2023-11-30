@@ -6,6 +6,7 @@ import random
 from fireball import Fireball,fireballs,enemy_fireballs
 from wizard import wizards
 from swordsman import swordsmen
+import sys
 def level_three(hero):
     hero.weapon = 1
     hero.speed = PLAYER_SPEED
@@ -51,7 +52,7 @@ def level_three(hero):
     while click != True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                break
+                sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 click = True
     #Main Loops

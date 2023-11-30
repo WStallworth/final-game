@@ -14,7 +14,7 @@ import level_one, level_two, level_three, level_four
 pygame.init()
 
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
-pygame.display.set_caption("A Sick Title for the game")
+pygame.display.set_caption("Gem Quest")
 
 #Clock object
 clock = pygame.time.Clock()
@@ -24,7 +24,7 @@ bronze = 0
 iron = 0
 gold = 0
 emerald = 0
-
+play_again = False
 #Pictures for ores to pull from later:
 bronze_pic = pygame.image.load("assets/backgrounds/misc_sprites/bronze.jpg").convert()
 iron_pic = pygame.image.load("assets/backgrounds/misc_sprites/iron.jpg").convert()
@@ -104,6 +104,53 @@ while running:
         screen.blit(gold_pic,(BASETILE_SIZE*3,SCREEN_HEIGHT-BASETILE_SIZE))
     if emerald >= L4_WIN:
         screen.blit(emerald_pic,(BASETILE_SIZE*4,SCREEN_HEIGHT-BASETILE_SIZE))
+        play_again = False
+
+    #Play again code
+    if emerald >= L4_WIN and play_again == False:
+        font = pygame.font.Font("assets/fonts/Old London.ttf", 36)
+        green = (0, 255, 0)
+        white = (255,255,255)
+        black = (0,0,0)
+        red = (255, 0, 0)
+        background_image = pygame.image.load("assets/backgrounds/win.jpg")
+        button_width, button_height = 150, 50
+        yes_button_rect = pygame.Rect(SCREEN_WIDTH // 4, SCREEN_HEIGHT // 2, button_width, button_height)
+        no_button_rect = pygame.Rect((SCREEN_WIDTH // 4) * 3 - button_width, SCREEN_HEIGHT // 2, button_width,
+                                     button_height)
+        pygame.display.flip()
+        click = False
+        while click != True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:  # Left mouse button
+                        mouse_pos = pygame.mouse.get_pos()
+                        # Check if the mouse clicked on the "Yes" button
+                        if yes_button_rect.collidepoint(mouse_pos):
+                            bronze = 0
+                            iron = 0
+                            gold = 0
+                            emerald = 0
+                            play_again = True
+                            click = True
+                        # Check if the mouse clicked on the "No" button
+                        elif no_button_rect.collidepoint(mouse_pos):
+                            sys.exit()
+            pygame.draw.rect(screen, green, yes_button_rect)
+            pygame.draw.rect(screen, red, no_button_rect)
+
+            # Draw text on buttons
+            screen.blit(background_image,(0,0))
+            question = font.render("Do you want to play again?", True, black)
+            yes_text = font.render("Yes", True, black)
+            no_text = font.render("No", True, black)
+            screen.blit(yes_text, (yes_button_rect.x + 50, yes_button_rect.y + 15))
+            screen.blit(no_text, (no_button_rect.x + 60, no_button_rect.y + 15))
+            screen.blit(question, (yes_button_rect.x + 20, SCREEN_HEIGHT - 400))
+            # Update display
+            pygame.display.flip()
     #TODO: Figure out a way so plants arent on buildings without ruining performance
     pygame.sprite.groupcollide(object.decor, object.gray_house, True,False)
     pygame.sprite.groupcollide(object.decor, object.red_house, True, False)

@@ -5,6 +5,7 @@ from object import HouseTiles,wall,potion
 import random
 from fireball import Fireball,fireballs,enemy_fireballs
 from super_enemy import supers
+import sys
 def level_four(hero):
     hero.weapon = 1
     hero.speed = PLAYER_SPEED
@@ -29,27 +30,21 @@ def level_four(hero):
     ability_font_big = pygame.font.Font("assets/fonts/BRIDGE.TTF", 32)
     weapon_text = "Sword"
     arena = screen.copy()
-    background.draw_level_three(arena)
+    background.draw_level_four(arena)
     # Presenting abilities:
     screen.blit(arena, (0, 0))
-    ability_text1 = ability_font_big.render("New Ability: Wall Build", True, (255, 255, 255))
-    ability_text2 = ability_font_big.render("How to use: Click and drag to create walls wherever", True,
-                                            (255, 255, 255))
-    ability_text3 = ability_font_big.render("you drag. If it hits an enemy you do NOT gain", True,
-                                            (255, 255, 255))
-    ability_text4 = ability_font_big.render("a point,but it will kill them and fireballs. Left click to begin", True, (255, 255, 255))
-    ability_text5 = ability_font_big.render("Press 3 on the keyboard to access this ability", True, (255, 255, 255))
-    screen.blit(ability_text1, (260, 100))
-    screen.blit(ability_text2, (64, 132))
-    screen.blit(ability_text3, (32, 164))
-    screen.blit(ability_text4, (34, 196))
-    screen.blit(ability_text5, (116, 228))
+    ability_text4 = ability_font_big.render("Final Level: These enemies are SUPER UNITS ", True, (255, 255, 255))
+    ability_text5 = ability_font_big.render("and will not be killed by walls", True, (255, 255, 255))
+    ability_text6 = ability_font_big.render("Use all you have to win, left click to begin", True, (255, 255, 255))
+    screen.blit(ability_text4, (66, 196))
+    screen.blit(ability_text5, (180, 228))
+    screen.blit(ability_text6, (116, 260))
     pygame.display.flip()
     click = False
     while click != True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                break
+                sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 click = True
     #Main Loops
