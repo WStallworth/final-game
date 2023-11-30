@@ -1,7 +1,7 @@
 from game_constants import *
 import pygame
 
-class Wizard(pygame.sprite.Sprite):
+class Super_Enemy(pygame.sprite.Sprite):
     """My player class"""
 
     def __init__(self, x, y, image, target):
@@ -21,16 +21,16 @@ class Wizard(pygame.sprite.Sprite):
     def update(self):
         if self.rect.x != self.target.rect.x or self.rect.y != self.target.rect.y:
             try:
-                self.rect.x += (self.target.rect.x - self.rect.x) / abs(self.target.rect.x - self.rect.x) * WIZARD_SPEED
-                self.rect.y += (self.target.rect.y - self.rect.y) / abs(self.target.rect.y - self.rect.y) * WIZARD_SPEED
+                self.rect.x += (self.target.rect.x - self.rect.x) / abs(self.target.rect.x - self.rect.x) * ENEMY_SPEED
+                self.rect.y += (self.target.rect.y - self.rect.y) / abs(self.target.rect.y - self.rect.y) * ENEMY_SPEED
             except ZeroDivisionError:
                 try:
                     self.rect.y += (self.target.rect.y - self.rect.y) / abs(
-                        self.target.rect.y - self.rect.y) * WIZARD_SPEED
+                        self.target.rect.y - self.rect.y) * ENEMY_SPEED
                 except:
                     pass
 
 
-wizards = pygame.sprite.Group()
+supers = pygame.sprite.Group()
 
 

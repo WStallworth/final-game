@@ -4,19 +4,17 @@ import background
 from object import HouseTiles,wall,potion
 import random
 from fireball import Fireball,fireballs,enemy_fireballs
-from wizard import wizards
-from swordsman import swordsmen
-def level_three(hero):
+from super_enemy import supers
+def level_four(hero):
     hero.weapon = 1
     hero.speed = PLAYER_SPEED
     #Init a screen
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("Level Three")
+    pygame.display.set_caption("Level Four")
     #This is code for my wall lifespan
     wall_life = 0
     #Creating a enemy sprites
-    background.add_wizards(hero,5)
-    background.add_swordsmen(hero,5)
+    background.add_super(hero,10)
     #Creating Lives
     lives = NUM_LIVES
     hearts = pygame.image.load("assets/backgrounds/misc_sprites/heart.png").convert()
@@ -55,7 +53,7 @@ def level_three(hero):
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 click = True
     #Main Loops
-    while score < L3_WIN and lives > 0:
+    while score < L4_WIN and lives > 0:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 break
@@ -70,18 +68,12 @@ def level_three(hero):
             #Checking if you clicked on an enemy("Sword") and if they're in melee range(ONLY WORKS WHEN WEAPON IS 1)
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and hero.weapon == 1:
                 # Check if the mouse click is on any sprite in the group- CHAT GPT CODE
-                clicked_sprites = [sprite for sprite in wizards if sprite.rect.collidepoint(event.pos)]
+                clicked_sprites = [sprite for sprite in supers if sprite.rect.collidepoint(event.pos)]
                 for clicked_sprite in clicked_sprites:
                     if abs(clicked_sprite.rect.x-hero.rect.x) <= MELEE_RANGE and abs(clicked_sprite.rect.y-hero.rect.y) <= MELEE_RANGE:
                         clicked_sprite.kill()  # Remove the clicked sprite from the group
                         score += 1
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and hero.weapon == 1:
-                # Check if the mouse click is on any sprite in the group- CHAT GPT CODE
-                clicked_sprites = [sprite for sprite in swordsmen if sprite.rect.collidepoint(event.pos)]
-                for clicked_sprite in clicked_sprites:
-                    if abs(clicked_sprite.rect.x-hero.rect.x) <= MELEE_RANGE and abs(clicked_sprite.rect.y-hero.rect.y) <= MELEE_RANGE:
-                        clicked_sprite.kill()  # Remove the clicked sprite from the group
-                        score += 1
+                        background.add_super(hero,1)
             #This code is for weapon 2, fireball(or arrows, whichever I havea picture for)
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and hero.weapon == 2:
                 fireballs.add(Fireball("assets/backgrounds/misc_sprites/fireball.png",hero.rect.x,hero.rect.y,*event.pos))
@@ -95,28 +87,22 @@ def level_three(hero):
 
         #Updating things that move:
         hero.update()
-        wizards.update()
-        swordsmen.update()
+        supers.update()
         fireballs.update()
         enemy_fireballs.update()
         #Checking to ensure there is always 5 wizards on the screen:
-        if len(wizards) < 5:
-            background.add_wizards(hero,(5-len(wizards)))
+        if len(supers) < 10:
+            background.add_super(hero,(10-len(supers)))
 
-        #Checking to ensure that there is 5 swordsmen on screen
-        if len(swordsmen) < 5:
-            background.add_swordsmen(hero,(5-len(swordsmen)))
         #Randomly deciding if each wizard will shoot a fireball
-        for wizard in wizards:
+        for enemy in supers:
             chance = random.randint(0,FIREBALL_CHANCE)
             if chance == 1:
-                enemy_fireballs.add(Fireball("assets/backgrounds/misc_sprites/fireball.png",wizard.rect.x,wizard.rect.y,
+                enemy_fireballs.add(Fireball("assets/backgrounds/misc_sprites/fireball.png",enemy.rect.x,enemy.rect.y,
                                              hero.rect.x,hero.rect.y))
-                enemy_fireballs.speed = ENEMY_FIREBALL_SPEED
 
         for fireball in enemy_fireballs:
             fireball.speed = ENEMY_FIREBALL_SPEED
-
         #Randomly deciding if a potion should be dropped:
         health_chance = random.randint(0,50)
         if health_chance == 1 and health_potions == 0:
@@ -127,24 +113,18 @@ def level_three(hero):
 
         # Drawing things
         hero.draw(screen)
-        wizards.draw(screen)
+        supers.draw(screen)
         wall.draw(screen)
         potion.draw(screen)
         fireballs.draw(screen)
         enemy_fireballs.draw(screen)
-        swordsmen.draw(screen)
 
         # Track lives in lower left corner:
         for i in range(1,lives+1):
             screen.blit(hearts, (BASETILE_SIZE * i, SCREEN_HEIGHT - BASETILE_SIZE))
 
         #Checking to see if the wizard unit hits the player, and taking life if it does hit
-        result = pygame.sprite.spritecollide(hero, wizards, True)
-        if result:
-            lives -= len(result) * WIZARD_MELEE
-
-        #Checking to see if the melee unit hits the player
-        result = pygame.sprite.spritecollide(hero, swordsmen, True)
+        result = pygame.sprite.spritecollide(hero, supers, True)
         if result:
             lives -= len(result) * ENEMY_DAMAGE
 
@@ -154,13 +134,7 @@ def level_three(hero):
             lives -= len(result) * WIZARD_FIRE
 
         #Checking to see if bad guys run into the walls, if they do kill them(for now)
-        result = pygame.sprite.groupcollide(wizards, wall, True, False)
-        if result:
-            background.add_wizards(hero, len(result))
-
-        result = pygame.sprite.groupcollide(swordsmen, wall, True, False)
-        if result:
-            background.add_swordsmen(hero, len(result))
+        pygame.sprite.groupcollide(supers, wall, False, True)
 
         #Checking to see if bad fireballs run into a wall:
         pygame.sprite.groupcollide(enemy_fireballs, wall, True, True)
@@ -171,16 +145,10 @@ def level_three(hero):
             health_potions = 0
 
         #Killing wizards if they get hit by fireball
-        result = pygame.sprite.groupcollide(wizards,fireballs,True,True)
+        result = pygame.sprite.groupcollide(supers,fireballs,True,True)
         if result:
             score += len(result)
             background.add_wizards(hero,len(result))
-
-        #Killing melee if they get hit by fireball
-        result = pygame.sprite.groupcollide(swordsmen, fireballs, True, True)
-        if result:
-            score += len(result)
-            background.add_swordsmen(hero, len(result))
 
         #Displaying score:
         text = score_font.render(f"Score : {score}", True, (0, 0, 0))
@@ -209,10 +177,8 @@ def level_three(hero):
         clock.tick(30)
     #Return at the end
     #This code removes all enemies so when you relaunch the level theres no pre-existing people
-    for person in wizards:
-        wizards.remove(person)
-    for person in swordsmen:
-        swordsmen.remove(person)
+    for person in supers:
+        supers.remove(person)
     for fireball in fireballs:
         fireballs.remove(fireball)
     hero.rect.x = SCREEN_WIDTH/2

@@ -2,8 +2,6 @@
 import pygame
 import random
 import sys
-
-import level_three
 from game_constants import *
 from player import Player
 import misc
@@ -11,7 +9,7 @@ import object
 import store
 import level_selection
 from npc import NPC, NPCS
-import level_one, level_two, level_three
+import level_one, level_two, level_three, level_four
 #Initialize Pygame
 pygame.init()
 
@@ -67,12 +65,12 @@ while running:
         level = level_selection.main(screen)
         if level == "L1":
             bronze = level_one.level_one(hero)
-        elif level == "L2":
+        elif level == "L2" and bronze:
             iron = level_two.level_two(hero)
-        elif level == "L3":
+        elif level == "L3" and iron:
             gold = level_three.level_three(hero)
-        elif level == "L4":
-            print("Level 4 Placeholder")
+        elif level == "L4" and gold:
+            emerald = level_four.level_four(hero)
 
 
     #Second house collision
@@ -83,7 +81,7 @@ while running:
         hero.rect.y = SCREEN_HEIGHT/2
         store.main(screen)
 
-
+    hero.speed = 12
     # draw background and update
     screen.blit(background, (0, 0))
     #These lines draw my houses and foliage

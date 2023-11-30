@@ -3,7 +3,7 @@ from game_constants import *
 import random
 from swordsman import Swordsman, swordsmen
 from wizard import Wizard,wizards
-
+from super_enemy import Super_Enemy, supers
 def draw_level_three(surface):
     # Covering everything in dungeon floor
     floor = ["assets/backgrounds/Tiles/tile_0000.png",
@@ -129,6 +129,12 @@ def add_wizards(target,num):
         wizards.add(Wizard(random.randint(BASETILE_SIZE, SCREEN_WIDTH - BASETILE_SIZE*2),
                                 random.randint(BASETILE_SIZE, SCREEN_HEIGHT - BASETILE_SIZE*2),
                                 "assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0084.png",target))
+
+def add_super(target,num):
+    for _ in range(num):
+        supers.add(Super_Enemy(random.randint(BASETILE_SIZE, SCREEN_WIDTH - BASETILE_SIZE*2),
+                                random.randint(BASETILE_SIZE, SCREEN_HEIGHT - BASETILE_SIZE*2),
+                                "assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0111.png",target))
 
 
 
