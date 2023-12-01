@@ -84,6 +84,14 @@ def level_three(hero):
                         clicked_sprite.kill()  # Remove the clicked sprite from the group
                         score += 1
 
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and hero.weapon == 1:
+                # Check if the mouse click is on any sprite in the group- CHAT GPT CODE
+                clicked_sprites = [sprite for sprite in wizards if sprite.rect.collidepoint(event.pos)]
+                for clicked_sprite in clicked_sprites:
+                    if abs(clicked_sprite.rect.x-hero.rect.x) <= MELEE_RANGE and abs(clicked_sprite.rect.y-hero.rect.y) <= MELEE_RANGE:
+                        clicked_sprite.kill()  # Remove the clicked sprite from the group
+                        score += 1
+
             #This code is for weapon 2, fireball(or arrows, whichever I havea picture for)
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and hero.weapon == 2:
                 fireballs.add(Fireball("assets/backgrounds/misc_sprites/fireball.png",hero.rect.x,hero.rect.y,*event.pos))

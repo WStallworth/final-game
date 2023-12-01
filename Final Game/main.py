@@ -42,7 +42,7 @@ misc.draw_spawn(background)
 misc.make_plants()
 #Creating an instance of the player
 #TODO: Actually fix the player class, this is just a skeleton to test with
-hero = Player(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,1,"assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0088.png")
+hero = Player(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,1,"assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0087.png")
 #making npcs, and randomly generating their appearance
 npc_images = ["assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0084.png","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0085.png","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0086.png","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0099.png","assets/backgrounds/kenney_tiny-dungeon/Tiles/tile_0100.png"]
 for _ in range(5):
@@ -50,6 +50,7 @@ for _ in range(5):
     NPCS.add(NPC(random.randint(BASETILE_SIZE, SCREEN_WIDTH - BASETILE_SIZE*2),random.randint(BASETILE_SIZE, SCREEN_HEIGHT - BASETILE_SIZE*2),npc_images[image]))
 #Main Loop:
 while running:
+    pygame.display.set_caption("Gem Quest")
     #quit condition
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -81,7 +82,7 @@ while running:
         hero.rect.y = SCREEN_HEIGHT/2
         store.main(screen)
 
-    hero.speed = 12
+    hero.speed = 15
 
     # draw background and update
     screen.blit(background, (0, 0))
@@ -112,7 +113,7 @@ while running:
 
     #Play again code
     if emerald >= L4_WIN and play_again == False:
-        font = pygame.font.Font("assets/fonts/Old London.ttf", 36)
+        font = pygame.font.Font("assets/fonts/8bitOperatorPlus8-Regular.ttf", 36)
         green = (0, 255, 0)
         white = (255,255,255)
         black = (0,0,0)
@@ -133,9 +134,6 @@ while running:
                         mouse_pos = pygame.mouse.get_pos()
                         # Check if the mouse clicked on the "Yes" button
                         if yes_button_rect.collidepoint(mouse_pos):
-                            bronze = 0
-                            iron = 0
-                            gold = 0
                             emerald = 0
                             play_again = True
                             click = True
@@ -152,7 +150,7 @@ while running:
             no_text = font.render("No", True, black)
             screen.blit(yes_text, (yes_button_rect.x + 50, yes_button_rect.y + 15))
             screen.blit(no_text, (no_button_rect.x + 60, no_button_rect.y + 15))
-            screen.blit(question, (yes_button_rect.x + 20, SCREEN_HEIGHT - 400))
+            screen.blit(question, (yes_button_rect.x -32, SCREEN_HEIGHT - 400))
             # Update display
             pygame.display.flip()
     #TODO: Figure out a way so plants arent on buildings without ruining performance
