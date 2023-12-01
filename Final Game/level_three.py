@@ -10,22 +10,28 @@ import sys
 def level_three(hero):
     hero.weapon = 1
     hero.speed = PLAYER_SPEED
+
     #Init a screen
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Level Three")
+
     #This is code for my wall lifespan
     wall_life = 0
+
     #Creating a enemy sprites
     background.add_wizards(hero,5)
     background.add_swordsmen(hero,5)
+
     #Creating Lives
     lives = NUM_LIVES
     hearts = pygame.image.load("assets/backgrounds/misc_sprites/heart.png").convert()
     hearts.set_colorkey((255,255,255))
+
     # Clock object
     clock = pygame.time.Clock()
     score = 0
     health_potions = 0
+
     #Adding score font
     score_font = pygame.font.Font("assets/fonts/Old London.ttf", 16)
     ability_font = pygame.font.Font("assets/fonts/BRIDGE.TTF", 16)
@@ -33,6 +39,7 @@ def level_three(hero):
     weapon_text = "Sword"
     arena = screen.copy()
     background.draw_level_three(arena)
+
     # Presenting abilities:
     screen.blit(arena, (0, 0))
     ability_text1 = ability_font_big.render("New Ability: Wall Build", True, (255, 255, 255))
@@ -41,7 +48,7 @@ def level_three(hero):
     ability_text3 = ability_font_big.render("you drag. If it hits an enemy you do NOT gain", True,
                                             (255, 255, 255))
     ability_text4 = ability_font_big.render("a point,but it will kill them and fireballs. Left click to begin", True, (255, 255, 255))
-    ability_text5 = ability_font_big.render("Press 3 on the keyboard to access this ability", True, (255, 255, 255))
+    ability_text5 = ability_font_big.render("Press E on the keyboard to access this ability", True, (255, 255, 255))
     screen.blit(ability_text1, (260, 100))
     screen.blit(ability_text2, (64, 132))
     screen.blit(ability_text3, (32, 164))
@@ -55,6 +62,7 @@ def level_three(hero):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 click = True
+
     #Main Loops
     while score < L3_WIN and lives > 0:
         for event in pygame.event.get():
@@ -62,20 +70,12 @@ def level_three(hero):
                 break
             #Weapon Change:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:
+                if event.key == pygame.K_q:
                     hero.weapon = 1
-                elif event.key == pygame.K_2:
+                elif event.key == pygame.K_f:
                     hero.weapon = 2
-                elif event.key == pygame.K_3:
+                elif event.key == pygame.K_e:
                     hero.weapon = 3
-            #Checking if you clicked on an enemy("Sword") and if they're in melee range(ONLY WORKS WHEN WEAPON IS 1)
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and hero.weapon == 1:
-                # Check if the mouse click is on any sprite in the group- CHAT GPT CODE
-                clicked_sprites = [sprite for sprite in wizards if sprite.rect.collidepoint(event.pos)]
-                for clicked_sprite in clicked_sprites:
-                    if abs(clicked_sprite.rect.x-hero.rect.x) <= MELEE_RANGE and abs(clicked_sprite.rect.y-hero.rect.y) <= MELEE_RANGE:
-                        clicked_sprite.kill()  # Remove the clicked sprite from the group
-                        score += 1
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and hero.weapon == 1:
                 # Check if the mouse click is on any sprite in the group- CHAT GPT CODE
                 clicked_sprites = [sprite for sprite in swordsmen if sprite.rect.collidepoint(event.pos)]
@@ -83,9 +83,11 @@ def level_three(hero):
                     if abs(clicked_sprite.rect.x-hero.rect.x) <= MELEE_RANGE and abs(clicked_sprite.rect.y-hero.rect.y) <= MELEE_RANGE:
                         clicked_sprite.kill()  # Remove the clicked sprite from the group
                         score += 1
+
             #This code is for weapon 2, fireball(or arrows, whichever I havea picture for)
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and hero.weapon == 2:
                 fireballs.add(Fireball("assets/backgrounds/misc_sprites/fireball.png",hero.rect.x,hero.rect.y,*event.pos))
+
             #This is code for weapon 3, defensive weapon
             if event.type == pygame.MOUSEMOTION and pygame.mouse.get_pressed()[0] and hero.weapon == 3:
                 # Create a new sprite while the left mouse button is pressed and mouse is moving
@@ -100,6 +102,7 @@ def level_three(hero):
         swordsmen.update()
         fireballs.update()
         enemy_fireballs.update()
+
         #Checking to ensure there is always 5 wizards on the screen:
         if len(wizards) < 5:
             background.add_wizards(hero,(5-len(wizards)))

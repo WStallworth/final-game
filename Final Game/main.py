@@ -82,15 +82,19 @@ while running:
         store.main(screen)
 
     hero.speed = 12
+
     # draw background and update
     screen.blit(background, (0, 0))
+
     #These lines draw my houses and foliage
     misc.draw_red_house(background, 150, 125)
     misc.draw_gray_house(background,600,450)
     object.decor.draw(screen)
+
     #Updates things that are moving
     hero.update()
     NPCS.update()
+
     #Finally drawing things that are moving
     hero.draw(screen)
     NPCS.draw(screen)

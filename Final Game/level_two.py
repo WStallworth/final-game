@@ -9,21 +9,24 @@ import sys
 def level_two(hero):
     hero.weapon = 1
     hero.speed = PLAYER_SPEED
+
     #Init a screen
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Level Two")
-    #This is code for my wall lifespan
-    wall_life = 0
+
     #Creating a enemy sprites
     background.add_wizards(hero,5)
+
     #Creating Lives
     lives = NUM_LIVES
     hearts = pygame.image.load("assets/backgrounds/misc_sprites/heart.png").convert()
     hearts.set_colorkey((255,255,255))
+
     # Clock object
     clock = pygame.time.Clock()
     score = 0
     health_potions = 0
+
     #Adding score font
     score_font = pygame.font.Font("assets/fonts/Old London.ttf", 16)
     ability_font = pygame.font.Font("assets/fonts/BRIDGE.TTF", 16)
@@ -31,13 +34,14 @@ def level_two(hero):
     weapon_text = "Sword"
     arena = screen.copy()
     background.draw_level_two(arena)
+
     #Presenting abilities:
     screen.blit(arena,(0,0))
     ability_text1 = ability_font_big.render("New Ability: Fireball",True,(255,255,255))
     ability_text2 = ability_font_big.render("How to use: Click to create a fireball that will travel",True,(255,255,255))
     ability_text3 = ability_font_big.render("towards where you clicked. If it hits an enemy you gain ",True,(255,255,255))
     ability_text4 = ability_font_big.render("one point. Left click to begin the level",True, (255,255,255))
-    ability_text5 = ability_font_big.render("Press 2 on the keyboard to access this ability", True, (255, 255, 255))
+    ability_text5 = ability_font_big.render("Press F on the keyboard to access this ability", True, (255, 255, 255))
     screen.blit(ability_text1,(275,100))
     screen.blit(ability_text2,(64,132))
     screen.blit(ability_text3,(32,164))
@@ -51,6 +55,7 @@ def level_two(hero):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 click = True
+
     #Main Loops
     while score < L2_WIN and lives > 0:
         for event in pygame.event.get():
@@ -58,9 +63,9 @@ def level_two(hero):
                 break
             #Weapon Change:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:
+                if event.key == pygame.K_q:
                     hero.weapon = 1
-                elif event.key == pygame.K_2:
+                elif event.key == pygame.K_f:
                     hero.weapon = 2
             #Checking if you clicked on an enemy("Sword") and if they're in melee range(ONLY WORKS WHEN WEAPON IS 1)
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and hero.weapon == 1:
@@ -71,6 +76,7 @@ def level_two(hero):
                         clicked_sprite.kill()  # Remove the clicked sprite from the group
                         score += 1
                         background.add_wizards(hero,1)
+
             #This code is for weapon 2, fireball(or arrows, whichever I havea picture for)
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and hero.weapon == 2:
                 fireballs.add(Fireball("assets/backgrounds/misc_sprites/fireball.png",hero.rect.x,hero.rect.y,*event.pos))
@@ -83,6 +89,7 @@ def level_two(hero):
         wizards.update()
         fireballs.update()
         enemy_fireballs.update()
+
         #Checking to ensure there is always 5 wizards on the screen:
         if len(wizards) < 5:
             background.add_wizards(hero,(5-len(wizards)))
@@ -95,6 +102,7 @@ def level_two(hero):
                                              hero.rect.x,hero.rect.y))
                 enemy_fireballs.speed = ENEMY_FIREBALL_SPEED
 
+        #Changing Fireball speed
         for fireball in enemy_fireballs:
             fireball.speed = ENEMY_FIREBALL_SPEED
 

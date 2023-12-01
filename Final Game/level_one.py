@@ -12,17 +12,20 @@ def level_one(hero):
     #Init a screen
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Level One")
-    #This is code for my wall lifespan
+
     #Creating a enemy sprites
     background.add_swordsmen(hero,5)
+
     #Creating Lives
     lives = NUM_LIVES
     hearts = pygame.image.load("assets/backgrounds/misc_sprites/heart.png").convert()
     hearts.set_colorkey((255,255,255))
+
     # Clock object
     clock = pygame.time.Clock()
     score = 0
     health_potions = 0
+
     #Adding score font
     score_font = pygame.font.Font("assets/fonts/Old London.ttf", 16)
     ability_font = pygame.font.Font("assets/fonts/BRIDGE.TTF", 16)
@@ -30,16 +33,19 @@ def level_one(hero):
     weapon_text = "Sword"
     arena = screen.copy()
     background.draw_level_one(arena)
+
     #Presenting abilities:
     screen.blit(arena,(0,0))
     ability_text1 = ability_font_big.render("New Ability: Melee Attack",True,(255,255,255))
     ability_text2 = ability_font_big.render("How to use: When within 5 tiles of an enemy if you click",True,(255,255,255))
     ability_text3 = ability_font_big.render("on them they will die and you will gain one point",True,(255,255,255))
     ability_text4 = ability_font_big.render("Left click to begin the level",True, (255,255,255))
+    ability_text5 = ability_font_big.render("Press Q on the keyboard to access this ability", True, (255, 255, 255))
     screen.blit(ability_text1,(215,100))
     screen.blit(ability_text2,(32,132))
     screen.blit(ability_text3,(64,164))
     screen.blit(ability_text4,(215,196))
+    screen.blit(ability_text5, (116, 228))
     pygame.display.flip()
     click = False
     while click != True:
@@ -69,7 +75,7 @@ def level_one(hero):
         #Updating things that move:
         hero.update()
         swordsmen.update()
-        fireballs.update()
+
         #Checking to ensure there is always 5 swoardsmen on the screen:
         if len(swordsmen) < 5:
             background.add_swordsmen(hero,(5-len(swordsmen)))
@@ -86,6 +92,7 @@ def level_one(hero):
         hero.draw(screen)
         swordsmen.draw(screen)
         potion.draw(screen)
+
         # Track lives in lower left corner:
         for i in range(1,lives+1):
             screen.blit(hearts, (BASETILE_SIZE * i, SCREEN_HEIGHT - BASETILE_SIZE))
@@ -103,7 +110,7 @@ def level_one(hero):
             health_potions = 0
 
         #Displaying score:
-        text = score_font.render(f"Score : {score}", True, (0, 0, 0))
+        text = score_font.render(f"Score : {score}", True, (0,0,0))
         screen.blit(text, (SCREEN_WIDTH - BASETILE_SIZE * 5, 0))
 
         #Shwoing equiped ability:

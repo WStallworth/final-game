@@ -9,21 +9,27 @@ import sys
 def level_four(hero):
     hero.weapon = 1
     hero.speed = PLAYER_SPEED
+
     #Init a screen
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Level Four")
+
     #This is code for my wall lifespan
     wall_life = 0
+
     #Creating a enemy sprites
     background.add_super(hero,10)
+
     #Creating Lives
     lives = NUM_LIVES
     hearts = pygame.image.load("assets/backgrounds/misc_sprites/heart.png").convert()
     hearts.set_colorkey((255,255,255))
+
     # Clock object
     clock = pygame.time.Clock()
     score = 0
     health_potions = 0
+
     #Adding score font
     score_font = pygame.font.Font("assets/fonts/Old London.ttf", 16)
     ability_font = pygame.font.Font("assets/fonts/BRIDGE.TTF", 16)
@@ -31,6 +37,7 @@ def level_four(hero):
     weapon_text = "Sword"
     arena = screen.copy()
     background.draw_level_four(arena)
+
     # Presenting abilities:
     screen.blit(arena, (0, 0))
     ability_text4 = ability_font_big.render("Final Level: These enemies are SUPER UNITS ", True, (255, 255, 255))
@@ -47,6 +54,7 @@ def level_four(hero):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 click = True
+
     #Main Loops
     while score < L4_WIN and lives > 0:
         for event in pygame.event.get():
@@ -54,11 +62,11 @@ def level_four(hero):
                 break
             #Weapon Change:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:
+                if event.key == pygame.K_q:
                     hero.weapon = 1
-                elif event.key == pygame.K_2:
+                elif event.key == pygame.K_f:
                     hero.weapon = 2
-                elif event.key == pygame.K_3:
+                elif event.key == pygame.K_e:
                     hero.weapon = 3
             #Checking if you clicked on an enemy("Sword") and if they're in melee range(ONLY WORKS WHEN WEAPON IS 1)
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and hero.weapon == 1:
@@ -85,6 +93,7 @@ def level_four(hero):
         supers.update()
         fireballs.update()
         enemy_fireballs.update()
+
         #Checking to ensure there is always 5 wizards on the screen:
         if len(supers) < 10:
             background.add_super(hero,(10-len(supers)))
