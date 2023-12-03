@@ -50,7 +50,7 @@ for _ in range(5):
     NPCS.add(NPC(random.randint(BASETILE_SIZE, SCREEN_WIDTH - BASETILE_SIZE*2),random.randint(BASETILE_SIZE, SCREEN_HEIGHT - BASETILE_SIZE*2),npc_images[image]))
 #Main Loop:
 while running:
-    pygame.display.set_caption("Gem Quest")
+    pygame.display.set_caption("Ore Quest")
     #quit condition
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
