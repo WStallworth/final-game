@@ -6,3 +6,4 @@ To move your character use the WASD keys. This game also employs mouse motion an
 The first three levels introduce a new ability. These abilities are keybound as such: Q = Melee, F= Fireball, E = Wall Build. The currently equiped ability is at the top of the screen in each level.
 Occasionally you will see blue potions drop in each level.  These will heal you for three lives.
 If you choose to play again, you can replay the levels in any order.  You do not have to go ore by ore again.
+Some code was obtained using ChatGPT, but this was more so of a skeleton and was heavily edited.  This code is made clear in the program files
