@@ -208,7 +208,13 @@ def level_three(hero):
         ability = ability_font.render(f"Ability: {weapon_text}", True, (0, 0, 0))
         screen.blit(ability, ((SCREEN_WIDTH /2)-(BASETILE_SIZE*2), 0))
 
+        if len(wizards) > 5:
+            for i in range(0,(len(wizards)-5)):
+                wizards.remove(i)
 
+        if len(swordsmen) > 5:
+            for i in range(0,(len(swordsmen)-5)):
+                swordsmen.remove(i)
         # Flipping the display so you can actually see
         pygame.display.flip()
         #removing walls eventually
