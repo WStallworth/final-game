@@ -152,7 +152,7 @@ def level_four(hero):
         result = pygame.sprite.groupcollide(supers,fireballs,True,True)
         if result:
             score += len(result)
-            background.add_wizards(hero,len(result))
+            background.add_super(hero,len(result))
 
         #Displaying score:
         text = score_font.render(f"Score : {score}", True, (0, 0, 0))
